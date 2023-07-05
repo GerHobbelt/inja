@@ -50,7 +50,7 @@ class Lexer {
       return make_token(Token::Kind::Eof);
     }
     const char ch = m_in[tok_start];
-    if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\\') {
+    if (ch == ' ' || ch == '\t' || ch == '\r') {
       tok_start += 1;
       goto again;
     }
@@ -152,7 +152,7 @@ class Lexer {
         return make_token(Token::Kind::NotEqual);
       }
       return make_token(Token::Kind::Unknown);
-    case '\"':
+    case '"':
       return scan_string();
     case '0':
     case '1':
