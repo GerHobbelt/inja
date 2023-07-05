@@ -213,7 +213,7 @@ class Lexer {
       }
       const char ch = m_in[pos++];
       if (ch == '\\') {
-        escape = !escape;
+        escape = false;
       } else if (!escape && ch == m_in[tok_start]) {
         break;
       } else {
