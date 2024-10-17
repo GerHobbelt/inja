@@ -1,5 +1,7 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#ifdef INJA_TEST_SOURCEFILE 
+
 TEST_CASE("source location") {
   std::string content = R""""(Lorem Ipsum
   Dolor
@@ -49,3 +51,5 @@ TEST_CASE("copy environment") {
   // template is unchanged in copy
   CHECK(copy.render(test_tpl, inja::json()) == "4");
 }
+
+#endif

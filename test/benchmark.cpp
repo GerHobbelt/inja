@@ -22,7 +22,7 @@ BENCHMARK(LargeDataLargeTemplate, render, 5, 5) {
   env.render(large_template, large_data);
 }
 
-int main() {
+int main(void) {
   hayai::ConsoleOutputter consoleOutputter;
 
   hayai::Benchmarker::AddOutputter(consoleOutputter);

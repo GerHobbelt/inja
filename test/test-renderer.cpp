@@ -1,5 +1,7 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#ifdef INJA_TEST_SOURCEFILE 
+
 TEST_CASE("types") {
   inja::Environment env;
   inja::json data;
@@ -302,3 +304,5 @@ $$ endif
     CHECK(env.render(string_template, data) == "Hello Peter\n    You really are Peter\n");
   }
 }
+
+#endif

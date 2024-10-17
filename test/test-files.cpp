@@ -1,5 +1,7 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#ifdef INJA_TEST_SOURCEFILE 
+
 TEST_CASE("loading") {
   inja::Environment env;
   inja::json data;
@@ -101,3 +103,5 @@ TEST_CASE("include-in-memory-and-file-template") {
 
   CHECK(env.render_file("include-both.txt", data) == "Hello Jeff. - Bye Jeff.");
 }
+
+#endif

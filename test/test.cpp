@@ -10,6 +10,8 @@
 
 const std::string test_file_directory {"../test/data/"};
 
+#define INJA_TEST_SOURCEFILE 1
+
 #include "test-files.cpp"
 #include "test-functions.cpp"
 #include "test-renderer.cpp"

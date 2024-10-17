@@ -1,5 +1,7 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#ifdef INJA_TEST_SOURCEFILE 
+
 TEST_CASE("functions") {
   inja::Environment env;
 
@@ -312,3 +314,5 @@ TEST_CASE("combinations") {
   CHECK(env.render("{{ true or (true or true) }}", data) == "true");
   CHECK(env.render("{{ at(list_of_objects, 1).b }}", data) == "3");
 }
+
+#endif
