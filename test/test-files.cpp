@@ -1,11 +1,8 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
-#include <doctest/doctest.h>
-
-#ifdef INJA_TEST_SOURCEFILE 
-
 #include "inja/environment.hpp"
-#include "inja/inja.hpp"
+
+#include "test-common.hpp"
 
 TEST_CASE("loading") {
   inja::Environment env;
@@ -101,12 +98,11 @@ TEST_CASE("include-in-memory-and-file-template") {
   inja::json data;
   data["name"] = "Jeff";
 
-  CHECK_THROWS_WITH(env.render_file("include-both.txt", data), "[inja.exception.file_error] failed accessing file at '../test/data/body'");
+  std::string error_message = "[inja.exception.file_error] failed accessing file at '" + test_file_directory + "body'";
+  CHECK_THROWS_WITH(env.render_file("include-both.txt", data), error_message.c_str());
 
   const auto parsed_body_template = env.parse("Bye {{ name }}.");
   env.include_template("body", parsed_body_template);
 
   CHECK(env.render_file("include-both.txt", data) == "Hello Jeff. - Bye Jeff.");
 }
-
-#endif

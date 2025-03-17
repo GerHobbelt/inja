@@ -1,13 +1,8 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
-#include <doctest/doctest.h>
-#include <string>
-
-#ifdef INJA_TEST_SOURCEFILE 
-
 #include "inja/environment.hpp"
-#include "inja/inja.hpp"
-#include "inja/template.hpp"
+
+#include "test-common.hpp"
 
 TEST_CASE("types") {
   inja::Environment env;
@@ -311,5 +306,3 @@ $$ endif
     CHECK(env.render(string_template, data) == "Hello Peter\n    You really are Peter\n");
   }
 }
-
-#endif
