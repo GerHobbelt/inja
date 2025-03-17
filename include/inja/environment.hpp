@@ -10,6 +10,7 @@
 #include "json.hpp"
 #include "config.hpp"
 #include "function_storage.hpp"
+#include "inja.hpp"
 #include "parser.hpp"
 #include "renderer.hpp"
 #include "template.hpp"

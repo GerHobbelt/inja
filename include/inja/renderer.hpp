@@ -18,6 +18,7 @@
 #include "config.hpp"
 #include "exceptions.hpp"
 #include "function_storage.hpp"
+#include "inja.hpp"
 #include "node.hpp"
 #include "template.hpp"
 #include "throw.hpp"

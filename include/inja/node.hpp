@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "function_storage.hpp"
+#include "inja.hpp"
 #include "utils.hpp"
 #include "json.hpp"
 

@@ -1,5 +1,8 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#include <doctest/doctest.h>
+#include <string>
+
 #include "inja/environment.hpp"
 
 #include "test-common.hpp"

@@ -1,6 +1,9 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
+#include <doctest/doctest.h>
+
 #define JSON_USE_IMPLICIT_CONVERSIONS 0
 #define JSON_NO_IO 1
 
