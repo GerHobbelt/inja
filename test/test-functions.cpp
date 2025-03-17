@@ -1,6 +1,12 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#include <doctest/doctest.h>
+#include <string>
+
 #ifdef INJA_TEST_SOURCEFILE 
+
+#include "inja/environment.hpp"
+#include "inja/inja.hpp"
 
 TEST_CASE("functions") {
   inja::Environment env;

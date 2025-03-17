@@ -1,6 +1,13 @@
 // Copyright (c) 2020 Pantor. All rights reserved.
 
+#include <doctest/doctest.h>
+#include <string>
+
 #ifdef INJA_TEST_SOURCEFILE 
+
+#include "inja/environment.hpp"
+#include "inja/inja.hpp"
+#include "inja/template.hpp"
 
 TEST_CASE("types") {
   inja::Environment env;
@@ -162,7 +169,7 @@ TEST_CASE("templates") {
 
   SUBCASE("reuse") {
     inja::Environment env;
-    inja::Template temp = env.parse("{% if is_happy %}{{ name }}{% else %}{{ city }}{% endif %}");
+    const inja::Template temp = env.parse("{% if is_happy %}{{ name }}{% else %}{{ city }}{% endif %}");
 
     CHECK(env.render(temp, data) == "Peter");
 
@@ -173,10 +180,10 @@ TEST_CASE("templates") {
 
   SUBCASE("include") {
     inja::Environment env;
-    inja::Template t1 = env.parse("Hello {{ name }}");
+    const inja::Template t1 = env.parse("Hello {{ name }}");
     env.include_template("greeting", t1);
 
-    inja::Template t2 = env.parse("{% include \"greeting\" %}!");
+    const inja::Template t2 = env.parse("{% include \"greeting\" %}!");
     CHECK(env.render(t2, data) == "Hello Peter!");
     CHECK_THROWS_WITH(env.parse("{% include \"does-not-exist\" %}!"), "[inja.exception.file_error] failed accessing file at 'does-not-exist'");
 
@@ -191,13 +198,13 @@ TEST_CASE("templates") {
     env.set_search_included_templates_in_files(false);
     env.set_include_callback([&env](const std::string&, const std::string&) { return env.parse("Hello {{ name }}"); });
 
-    inja::Template t1 = env.parse("{% include \"greeting\" %}!");
+    const inja::Template t1 = env.parse("{% include \"greeting\" %}!");
     CHECK(env.render(t1, data) == "Hello Peter!");
 
     env.set_search_included_templates_in_files(true);
     env.set_include_callback([&env](const std::string&, const std::string& name) { return env.parse("Bye " + name); });
 
-    inja::Template t2 = env.parse("{% include \"Jeff\" %}!");
+    const inja::Template t2 = env.parse("{% include \"Jeff\" %}!");
     CHECK(env.render(t2, data) == "Bye Jeff!");
   }
 
@@ -213,9 +220,9 @@ TEST_CASE("templates") {
 
   SUBCASE("count variables") {
     inja::Environment env;
-    inja::Template t1 = env.parse("Hello {{ name }}");
-    inja::Template t2 = env.parse("{% if is_happy %}{{ name }}{% else %}{{ city }}{% endif %}");
-    inja::Template t3 = env.parse("{% if at(name, test) %}{{ name }}{% else %}{{ city }}{{ upper(city) }}{% endif %}");
+    const inja::Template t1 = env.parse("Hello {{ name }}");
+    const inja::Template t2 = env.parse("{% if is_happy %}{{ name }}{% else %}{{ city }}{% endif %}");
+    const inja::Template t3 = env.parse("{% if at(name, test) %}{{ name }}{% else %}{{ city }}{{ upper(city) }}{% endif %}");
 
     CHECK(t1.count_variables() == 1);
     CHECK(t2.count_variables() == 3);

@@ -10,6 +10,7 @@ project(inja LANGUAGES CXX VERSION 3.4.0)
 
 option(INJA_USE_EMBEDDED_JSON "Use the shipped json header if not available on the system" ON)
 option(INJA_INSTALL "Generate install targets for inja" ON)
+option(INJA_INSTALL_SINGLE_HEADER "Install the single header instead" OFF)
 option(INJA_EXPORT "Export the current build tree to the package registry" ON)
 option(BUILD_TESTING "Build unit tests" ON)
 option(INJA_BUILD_TESTS "Build unit tests when BUILD_TESTING is enabled." ON)
@@ -83,6 +84,7 @@ if(BUILD_TESTING AND INJA_BUILD_TESTS)
 
   add_executable(inja_test test/test.cpp)
   target_link_libraries(inja_test PRIVATE inja)
+  target_include_directories(inja_test PRIVATE include third_party/include)
   add_test(inja_test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/inja_test)
 
   if(MSVC)
@@ -94,10 +96,11 @@ if(BUILD_TESTING AND INJA_BUILD_TESTS)
 
   add_library(single_inja INTERFACE)
   target_compile_features(single_inja INTERFACE cxx_std_17)
-  target_include_directories(single_inja INTERFACE single_include include third_party/include)
+  target_include_directories(single_inja INTERFACE single_include)
 
   add_executable(single_inja_test test/test.cpp)
   target_link_libraries(single_inja_test PRIVATE single_inja)
+  target_include_directories(single_inja_test PRIVATE include third_party/include)
 
   add_test(single_inja_test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/single_inja_test)
 endif()
@@ -166,11 +169,20 @@ if(INJA_INSTALL)
     NO_CHECK_REQUIRED_COMPONENTS_MACRO
   )
 
-  install(
-    DIRECTORY include/inja
-    DESTINATION ${INJA_INSTALL_INCLUDE_DIR}
-    FILES_MATCHING PATTERN "*.hpp"
-  )
+  if(INJA_INSTALL_SINGLE_HEADER)
+    install(
+      DIRECTORY single_include/inja
+      DESTINATION ${INJA_INSTALL_INCLUDE_DIR}
+      FILES_MATCHING PATTERN "*.hpp"
+    )
+  else()
+    install(
+      DIRECTORY include/inja
+      DESTINATION ${INJA_INSTALL_INCLUDE_DIR}
+      FILES_MATCHING PATTERN "*.hpp"
+    )
+  endif()
+
   if(INJA_USE_EMBEDDED_JSON)
     install(
       DIRECTORY third_party/include/nlohmann
@@ -178,6 +190,7 @@ if(INJA_INSTALL)
       FILES_MATCHING PATTERN "*.hpp"
     )
   endif()
+
   install(
     FILES
       "${CMAKE_CURRENT_BINARY_DIR}/${INJA_CONFIG_PATH}/injaConfig.cmake"
